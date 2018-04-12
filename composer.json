@@ -1,0 +1,18 @@
+{
+    "description": "Structured editing for Neos",
+    "type": "neos-package",
+    "name": "flowpack/structuredediting",
+    "require": {
+        "neos/neos": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flowpack\\StructuredEditing\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Flowpack.StructuredEditing"
+        }
+    }
+}

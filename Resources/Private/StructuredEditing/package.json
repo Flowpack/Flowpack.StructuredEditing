@@ -1,0 +1,18 @@
+{
+  "description": "Structured editing for Neos",
+  "private": true,
+  "scripts": {
+    "build": "neos-react-scripts build",
+    "watch": "neos-react-scripts watch"
+  },
+  "devDependencies": {
+    "@neos-project/neos-ui-extensibility": "*"
+  },
+  "neos": {
+    "buildTargetDirectory": "../../Public/JavaScript/StructuredEditing"
+  },
+  "dependencies": {
+    "@neos-project/eslint-config-neos": "^2.1.2",
+    "lodash.upperfirst": "^4.3.1"
+  }
+}

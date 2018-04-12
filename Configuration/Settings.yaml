@@ -1,0 +1,7 @@
+Neos:
+  Neos:
+    Ui:
+      resources:
+        javascript:
+          'Flowpack.StructuredEditing:StructuredEditing':
+            resource: resource://Flowpack.StructuredEditing/Public/JavaScript/StructuredEditing/Plugin.js
