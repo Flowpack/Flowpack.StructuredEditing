@@ -1,5 +1,6 @@
 # Structured Inline Editing for Neos CMS
 
+Allows to reuse inspector editors inline. Hint: put all content-related properties inline and leave only metadata properties in the inspector.
 
 ![Demo](https://raw.githubusercontent.com/flowpack/Flowpack.StructuredEditing/master/structured.gif)
 
@@ -39,3 +40,5 @@ prototype(Some.Node:Type) < prototype(Neos.Fusion:Array) {
  @process.contentElementWrapping = ContentElementWrapping
 }
 ```
+
+**The concept behind this package will be merged back into the core once it matures, for now let's try it out in practice!**
