@@ -18,10 +18,6 @@ Getting started:
       ui:
         label: Date
         reloadIfChanged: true
-        inspector:
-          group: news
-          editorOptions:
-            format: 'd-m-Y H:i'
         inline:
           editor: 'Flowpack.StructuredEditing/EditorEnvelope'
           editorOptions:
