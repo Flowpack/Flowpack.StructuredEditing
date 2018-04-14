@@ -7,7 +7,6 @@ import {DropDown} from '@neos-project/react-ui-components';
 import {connect} from 'react-redux';
 import {$transform, $get} from 'plow-js';
 import EditorEnvelope from '@neos-project/neos-ui-editors';
-import style from './style.css';
 
 @connect($transform({
     currentlyEditedPropertyName: selectors.UI.ContentCanvas.currentlyEditedPropertyName,
