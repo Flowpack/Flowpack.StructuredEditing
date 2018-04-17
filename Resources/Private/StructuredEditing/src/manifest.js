@@ -4,10 +4,12 @@ import ReactDOM from 'react-dom';
 import manifest from '@neos-project/neos-ui-extensibility';
 import {selectors} from '@neos-project/neos-ui-redux-store';
 import {DropDown} from '@neos-project/react-ui-components';
+import {withDragDropContext} from '@neos-project/neos-ui-decorators';
 import {connect} from 'react-redux';
 import {$transform, $get} from 'plow-js';
 import EditorEnvelope from '@neos-project/neos-ui-editors';
 
+@withDragDropContext
 @connect($transform({
     currentlyEditedPropertyName: selectors.UI.ContentCanvas.currentlyEditedPropertyName,
     getNodeByContextPath: selectors.CR.Nodes.nodeByContextPath,

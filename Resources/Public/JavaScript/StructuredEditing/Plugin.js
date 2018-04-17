@@ -60,12 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 58);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 1:
+/******/ ([
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88,98 +87,16 @@ function readFromConsumerApi(key) {
 }
 
 /***/ }),
-
-/***/ 178:
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _readFromConsumerApi = __webpack_require__(1);
-
-var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
+__webpack_require__(2);
 
 /***/ }),
-
-/***/ 179:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _readFromConsumerApi = __webpack_require__(1);
-
-var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
-
-/***/ }),
-
-/***/ 180:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _readFromConsumerApi = __webpack_require__(1);
-
-var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiEditors;
-
-/***/ }),
-
-/***/ 2:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _readFromConsumerApi = __webpack_require__(1);
-
-var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().React;
-
-/***/ }),
-
-/***/ 5:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _readFromConsumerApi = __webpack_require__(1);
-
-var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().PropTypes;
-
-/***/ }),
-
-/***/ 58:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(59);
-
-/***/ }),
-
-/***/ 59:
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -191,31 +108,33 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _class, _class2, _temp2;
 
-var _react = __webpack_require__(2);
+var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(5);
+var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(60);
+var _reactDom = __webpack_require__(5);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _neosUiExtensibility = __webpack_require__(61);
+var _neosUiExtensibility = __webpack_require__(6);
 
 var _neosUiExtensibility2 = _interopRequireDefault(_neosUiExtensibility);
 
-var _neosUiReduxStore = __webpack_require__(65);
+var _neosUiReduxStore = __webpack_require__(10);
 
-var _reactUiComponents = __webpack_require__(66);
+var _reactUiComponents = __webpack_require__(11);
 
-var _reactRedux = __webpack_require__(178);
+var _neosUiDecorators = __webpack_require__(15);
 
-var _plowJs = __webpack_require__(179);
+var _reactRedux = __webpack_require__(12);
 
-var _neosUiEditors = __webpack_require__(180);
+var _plowJs = __webpack_require__(13);
+
+var _neosUiEditors = __webpack_require__(14);
 
 var _neosUiEditors2 = _interopRequireDefault(_neosUiEditors);
 
@@ -231,7 +150,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
     currentlyEditedPropertyName: _neosUiReduxStore.selectors.UI.ContentCanvas.currentlyEditedPropertyName,
     getNodeByContextPath: _neosUiReduxStore.selectors.CR.Nodes.nodeByContextPath,
     focusedNodePath: _neosUiReduxStore.selectors.CR.Nodes.focusedNodePathSelector
-})), _dec(_class = (_temp2 = _class2 = function (_PureComponent) {
+})), (0, _neosUiDecorators.withDragDropContext)(_class = _dec(_class = (_temp2 = _class2 = function (_PureComponent) {
     _inherits(InlineEditorEnvelope, _PureComponent);
 
     function InlineEditorEnvelope() {
@@ -355,7 +274,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
     globalRegistry: _propTypes2.default.object.isRequired,
     configuration: _propTypes2.default.object.isRequired,
     routes: _propTypes2.default.object.isRequired
-}, _temp2)) || _class);
+}, _temp2)) || _class) || _class);
 
 
 var findParentFusionPath = function findParentFusionPath(node, contextPath) {
@@ -397,14 +316,43 @@ var findParentFusionPath = function findParentFusionPath(node, contextPath) {
 });
 
 /***/ }),
-
-/***/ 60:
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _readFromConsumerApi = __webpack_require__(1);
+var _readFromConsumerApi = __webpack_require__(0);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().React;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(0);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().PropTypes;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(0);
 
 var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
@@ -413,8 +361,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = (0, _readFromConsumerApi2.default)('vendor')().ReactDOM;
 
 /***/ }),
-
-/***/ 61:
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -425,11 +372,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createConsumerApi = undefined;
 
-var _createConsumerApi = __webpack_require__(62);
+var _createConsumerApi = __webpack_require__(7);
 
 var _createConsumerApi2 = _interopRequireDefault(_createConsumerApi);
 
-var _readFromConsumerApi = __webpack_require__(1);
+var _readFromConsumerApi = __webpack_require__(0);
 
 var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
@@ -439,8 +386,7 @@ exports.default = (0, _readFromConsumerApi2.default)('manifest');
 exports.createConsumerApi = _createConsumerApi2.default;
 
 /***/ }),
-
-/***/ 62:
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -451,9 +397,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = createConsumerApi;
 
-var _package = __webpack_require__(63);
+var _package = __webpack_require__(8);
 
-var _manifest = __webpack_require__(64);
+var _manifest = __webpack_require__(9);
 
 var _manifest2 = _interopRequireDefault(_manifest);
 
@@ -482,15 +428,13 @@ function createConsumerApi(manifests, exposureMap) {
 }
 
 /***/ }),
-
-/***/ 63:
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = {"name":"@neos-project/neos-ui-extensibility","version":"1.0.9","description":"Extensibility mechanisms for the Neos CMS UI","main":"./src/index.js","scripts":{"prebuild":"check-dependencies && yarn clean","test":"yarn jest -- -w 2 --coverage","test:watch":"yarn jest -- --watch","build":"exit 0","build:watch":"exit 0","clean":"rimraf ./lib ./dist","lint":"eslint src","jest":"NODE_ENV=test jest"},"devDependencies":{"@neos-project/babel-preset-neos-ui":"1.0.9","@neos-project/jest-preset-neos-ui":"1.0.9"},"dependencies":{"@neos-project/build-essentials":"1.0.9","@neos-project/positional-array-sorter":"1.0.9","babel-core":"^6.13.2","babel-eslint":"^7.1.1","babel-loader":"^7.1.2","babel-plugin-transform-decorators-legacy":"^1.3.4","babel-plugin-transform-object-rest-spread":"^6.20.1","babel-plugin-webpack-alias":"^2.1.1","babel-preset-es2015":"^6.13.2","babel-preset-react":"^6.3.13","babel-preset-stage-0":"^6.3.13","chalk":"^1.1.3","css-loader":"^0.28.4","file-loader":"^1.1.5","json-loader":"^0.5.4","postcss-loader":"^2.0.10","react-dev-utils":"^0.5.0","style-loader":"^0.19.0"},"bin":{"neos-react-scripts":"./bin/neos-react-scripts.js"},"jest":{"preset":"@neos-project/jest-preset-neos-ui"}}
 
 /***/ }),
-
-/***/ 64:
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -512,14 +456,13 @@ exports.default = function (manifests) {
 };
 
 /***/ }),
-
-/***/ 65:
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _readFromConsumerApi = __webpack_require__(1);
+var _readFromConsumerApi = __webpack_require__(0);
 
 var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
@@ -528,14 +471,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiReduxStore;
 
 /***/ }),
-
-/***/ 66:
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _readFromConsumerApi = __webpack_require__(1);
+var _readFromConsumerApi = __webpack_require__(0);
 
 var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
@@ -543,7 +485,66 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().ReactUiComponents;
 
-/***/ })
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/******/ });
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(0);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(0);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(0);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiEditors;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(0);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiDecorators;
+
+/***/ })
+/******/ ]);
 //# sourceMappingURL=Plugin.js.map
