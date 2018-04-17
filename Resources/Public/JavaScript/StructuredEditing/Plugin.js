@@ -128,13 +128,13 @@ var _neosUiReduxStore = __webpack_require__(10);
 
 var _reactUiComponents = __webpack_require__(11);
 
-var _neosUiDecorators = __webpack_require__(15);
+var _neosUiDecorators = __webpack_require__(12);
 
-var _reactRedux = __webpack_require__(12);
+var _reactRedux = __webpack_require__(13);
 
-var _plowJs = __webpack_require__(13);
+var _plowJs = __webpack_require__(14);
 
-var _neosUiEditors = __webpack_require__(14);
+var _neosUiEditors = __webpack_require__(15);
 
 var _neosUiEditors2 = _interopRequireDefault(_neosUiEditors);
 
@@ -194,7 +194,11 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
                 getNodeByContextPath = _props2.getNodeByContextPath,
                 focusedNodePath = _props2.focusedNodePath;
 
-            var value = (0, _plowJs.$get)(['properties', propertyName], getNodeByContextPath(contextPath));
+            var node = getNodeByContextPath(contextPath);
+            var nodeTypeName = (0, _plowJs.$get)('nodeType', node);
+            var nodeType = this.props.nodeTypesRegistry.getNodeType(nodeTypeName);
+            var icon = (0, _plowJs.$get)('icon', editorOptions) || 'pencil';
+            var value = (0, _plowJs.$get)(['properties', propertyName], node);
             return _react2.default.createElement(
                 'div',
                 { style: { display: 'inline-block' } },
@@ -211,24 +215,26 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
                             null,
                             '\
                         .enveloper_dropdown_header{\
+                            position: relative;\
                             width: 30px;\
                             height: 30px;\
-                            padding: 8px;\
+                            padding: 0;\
+                        }\
+                        .enveloper_dropdown_icon{\
+                            position: absolute;\
+                            top: 8px;\
+                            left: 8px;\
                         }\
                         .enveloper_dropdown_contents{\
                             width: 320px;\
                             background-color: #272727;\
                         }\
-                        .enveloper_dropdown_header i {\
+                        .enveloper_dropdown_header i:nth-child(3) {\
                             display: none;\
                         }\
                         '
                         ),
-                        _react2.default.createElement(
-                            'svg',
-                            { style: { backgroundColor: '#323232', position: 'absolute', fill: 'white', width: '14px', height: '14px' }, width: '1792', height: '1792', viewBox: '0 0 1792 1792', xmlns: 'http://www.w3.org/2000/svg' },
-                            _react2.default.createElement('path', { d: 'M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z' })
-                        )
+                        _react2.default.createElement(_reactUiComponents.Icon, { className: 'enveloper_dropdown_icon', icon: icon })
                     ),
                     _react2.default.createElement(
                         _reactUiComponents.DropDown.Contents,
@@ -238,7 +244,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
                             null,
                             _react2.default.createElement(_neosUiEditors2.default, {
                                 identifier: propertyName,
-                                label: (0, _plowJs.$get)('label', editorOptions) || '',
+                                label: (0, _plowJs.$get)('label', editorOptions) || (0, _plowJs.$get)(['properties', propertyName, 'ui', 'label'], nodeType) || '',
                                 editor: (0, _plowJs.$get)('editor', editorOptions),
                                 value: value && value.toJS ? value.toJS() : value,
                                 hooks: null,
@@ -294,6 +300,7 @@ var findParentFusionPath = function findParentFusionPath(node, contextPath) {
         store = _ref2.store;
 
     var inlineEditorRegistry = globalRegistry.get('inlineEditors');
+    var nodeTypesRegistry = globalRegistry.get('@neos-project/neos-ui-contentrepository');
     inlineEditorRegistry.set('Flowpack.StructuredEditing/EditorEnvelope', {
         bootstrap: function bootstrap() {
             return null;
@@ -306,7 +313,8 @@ var findParentFusionPath = function findParentFusionPath(node, contextPath) {
                 routes: routes,
                 configuration: configuration,
                 store: store,
-                fusionPath: fusionPath
+                fusionPath: fusionPath,
+                nodeTypesRegistry: nodeTypesRegistry
             }, config)), domNode);
         },
         ToolbarComponent: function ToolbarComponent() {
@@ -431,7 +439,7 @@ function createConsumerApi(manifests, exposureMap) {
 /* 8 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"@neos-project/neos-ui-extensibility","version":"1.0.9","description":"Extensibility mechanisms for the Neos CMS UI","main":"./src/index.js","scripts":{"prebuild":"check-dependencies && yarn clean","test":"yarn jest -- -w 2 --coverage","test:watch":"yarn jest -- --watch","build":"exit 0","build:watch":"exit 0","clean":"rimraf ./lib ./dist","lint":"eslint src","jest":"NODE_ENV=test jest"},"devDependencies":{"@neos-project/babel-preset-neos-ui":"1.0.9","@neos-project/jest-preset-neos-ui":"1.0.9"},"dependencies":{"@neos-project/build-essentials":"1.0.9","@neos-project/positional-array-sorter":"1.0.9","babel-core":"^6.13.2","babel-eslint":"^7.1.1","babel-loader":"^7.1.2","babel-plugin-transform-decorators-legacy":"^1.3.4","babel-plugin-transform-object-rest-spread":"^6.20.1","babel-plugin-webpack-alias":"^2.1.1","babel-preset-es2015":"^6.13.2","babel-preset-react":"^6.3.13","babel-preset-stage-0":"^6.3.13","chalk":"^1.1.3","css-loader":"^0.28.4","file-loader":"^1.1.5","json-loader":"^0.5.4","postcss-loader":"^2.0.10","react-dev-utils":"^0.5.0","style-loader":"^0.19.0"},"bin":{"neos-react-scripts":"./bin/neos-react-scripts.js"},"jest":{"preset":"@neos-project/jest-preset-neos-ui"}}
+module.exports = {"name":"@neos-project/neos-ui-extensibility","version":"1.0.11","description":"Extensibility mechanisms for the Neos CMS UI","main":"./src/index.js","scripts":{"prebuild":"check-dependencies && yarn clean","test":"yarn jest -- -w 2 --coverage","test:watch":"yarn jest -- --watch","build":"exit 0","build:watch":"exit 0","clean":"rimraf ./lib ./dist","lint":"eslint src","jest":"NODE_ENV=test jest"},"devDependencies":{"@neos-project/babel-preset-neos-ui":"1.0.11","@neos-project/jest-preset-neos-ui":"1.0.11"},"dependencies":{"@neos-project/build-essentials":"1.0.11","@neos-project/positional-array-sorter":"1.0.11","babel-core":"^6.13.2","babel-eslint":"^7.1.1","babel-loader":"^7.1.2","babel-plugin-transform-decorators-legacy":"^1.3.4","babel-plugin-transform-object-rest-spread":"^6.20.1","babel-plugin-webpack-alias":"^2.1.1","babel-preset-es2015":"^6.13.2","babel-preset-react":"^6.3.13","babel-preset-stage-0":"^6.3.13","chalk":"^1.1.3","css-loader":"^0.28.4","file-loader":"^1.1.5","json-loader":"^0.5.4","postcss-loader":"^2.0.10","react-dev-utils":"^0.5.0","style-loader":"^0.19.0"},"bin":{"neos-react-scripts":"./bin/neos-react-scripts.js"},"jest":{"preset":"@neos-project/jest-preset-neos-ui"}}
 
 /***/ }),
 /* 9 */
@@ -498,7 +506,7 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiDecorators;
 
 /***/ }),
 /* 13 */
@@ -513,7 +521,7 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
 
 /***/ }),
 /* 14 */
@@ -528,7 +536,7 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiEditors;
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
 
 /***/ }),
 /* 15 */
@@ -543,7 +551,7 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiDecorators;
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiEditors;
 
 /***/ })
 /******/ ]);
