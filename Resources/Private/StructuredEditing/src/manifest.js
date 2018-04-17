@@ -59,7 +59,7 @@ class InlineEditorEnvelope extends PureComponent {
                         <div>
                             <EditorEnvelope
                                 identifier={propertyName}
-                                label={$get('label', editorOptions)}
+                                label={$get('label', editorOptions) || ''}
                                 editor={$get('editor', editorOptions)}
                                 value={value && value.toJS ? value.toJS() : value}
                                 hooks={null}

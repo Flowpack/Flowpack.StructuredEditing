@@ -238,7 +238,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
                             null,
                             _react2.default.createElement(_neosUiEditors2.default, {
                                 identifier: propertyName,
-                                label: (0, _plowJs.$get)('label', editorOptions),
+                                label: (0, _plowJs.$get)('label', editorOptions) || '',
                                 editor: (0, _plowJs.$get)('editor', editorOptions),
                                 value: value && value.toJS ? value.toJS() : value,
                                 hooks: null,
