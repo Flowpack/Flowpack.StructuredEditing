@@ -229,7 +229,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
                             width: 320px;\
                             background-color: #272727;\
                         }\
-                        .enveloper_dropdown_header i:nth-child(3) {\
+                        .enveloper_dropdown_header svg:nth-child(3) {\
                             display: none;\
                         }\
                         '
