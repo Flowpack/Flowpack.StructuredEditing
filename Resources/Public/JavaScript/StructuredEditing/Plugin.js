@@ -191,8 +191,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
                 propertyName = _props2.propertyName,
                 persistChange = _props2.persistChange,
                 editorOptions = _props2.editorOptions,
-                getNodeByContextPath = _props2.getNodeByContextPath,
-                focusedNodePath = _props2.focusedNodePath;
+                getNodeByContextPath = _props2.getNodeByContextPath;
 
             var node = getNodeByContextPath(contextPath);
             var nodeTypeName = (0, _plowJs.$get)('nodeType', node);
@@ -229,7 +228,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
                             width: 320px;\
                             background-color: #272727;\
                         }\
-                        .enveloper_dropdown_header i:nth-child(3) {\
+                        .enveloper_dropdown_header svg:nth-child(3) {\
                             display: none;\
                         }\
                         '
