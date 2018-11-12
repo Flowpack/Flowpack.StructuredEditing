@@ -6,7 +6,7 @@ Allows to reuse inspector editors inline. Hint: put all content-related properti
 
 Getting started:
 
-1. `composer require 'flowpack/structured-editing@dev'`
+1. `composer require 'flowpack/structuredediting@dev'`
 2. Configure your nodetype properties to be inline editable like this:
 
 ```
