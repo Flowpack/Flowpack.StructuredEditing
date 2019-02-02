@@ -8,6 +8,7 @@ import {withDragDropContext} from '@neos-project/neos-ui-decorators';
 import {connect} from 'react-redux';
 import {$transform, $get} from 'plow-js';
 import EditorEnvelope from '@neos-project/neos-ui-editors';
+import {NeosContext} from '@neos-project/neos-ui-decorators';
 
 @withDragDropContext
 @connect($transform({
@@ -118,15 +119,19 @@ manifest('Flowpack.StructuredEditing:EditorEnvelope', {}, (globalRegistry, {rout
             const domNode = config.propertyDomNode;
             const fusionPath = findParentFusionPath(domNode, config.contextPath);
             ReactDOM.render(
-                (<InlineEditorEnvelope
-                    globalRegistry={globalRegistry}
-                    routes={routes}
-                    configuration={configuration}
-                    store={store}
-                    fusionPath={fusionPath}
-                    nodeTypesRegistry={nodeTypesRegistry}
-                    {...config}
-                />), domNode);
+                (
+                    <NeosContext.Provider value={{configuration, globalRegistry, routes}}>
+                        <InlineEditorEnvelope
+                            globalRegistry={globalRegistry}
+                            routes={routes}
+                            configuration={configuration}
+                            store={store}
+                            fusionPath={fusionPath}
+                            nodeTypesRegistry={nodeTypesRegistry}
+                            {...config}
+                        />
+                    </NeosContext.Provider>
+                ), domNode);
         },
         ToolbarComponent: () => null
     });

@@ -6,7 +6,7 @@
     "watch": "neos-react-scripts watch"
   },
   "devDependencies": {
-    "@neos-project/neos-ui-extensibility": "*"
+    "@neos-project/neos-ui-extensibility": "^2"
   },
   "neos": {
     "buildTargetDirectory": "../../Public/JavaScript/StructuredEditing"
