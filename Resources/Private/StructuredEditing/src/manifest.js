@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom';
 import manifest from '@neos-project/neos-ui-extensibility';
 import {selectors} from '@neos-project/neos-ui-redux-store';
 import {DropDown, Icon} from '@neos-project/react-ui-components';
-import {withDragDropContext} from '@neos-project/neos-ui-decorators';
 import {connect} from 'react-redux';
 import {$transform, $get} from 'plow-js';
 import EditorEnvelope from '@neos-project/neos-ui-editors';
 import {NeosContext} from '@neos-project/neos-ui-decorators';
+import {DragDropContextProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
-@withDragDropContext
 @connect($transform({
     currentlyEditedPropertyName: selectors.UI.ContentCanvas.currentlyEditedPropertyName,
     getNodeByContextPath: selectors.CR.Nodes.nodeByContextPath,
@@ -117,20 +117,23 @@ manifest('Flowpack.StructuredEditing:EditorEnvelope', {}, (globalRegistry, {rout
         bootstrap: () => null,
         createInlineEditor: config => {
             const domNode = config.propertyDomNode;
+            const guestWindow = domNode.ownerDocument.defaultView;
             const fusionPath = findParentFusionPath(domNode, config.contextPath);
             ReactDOM.render(
                 (
-                    <NeosContext.Provider value={{configuration, globalRegistry, routes}}>
-                        <InlineEditorEnvelope
-                            globalRegistry={globalRegistry}
-                            routes={routes}
-                            configuration={configuration}
-                            store={store}
-                            fusionPath={fusionPath}
-                            nodeTypesRegistry={nodeTypesRegistry}
-                            {...config}
-                        />
-                    </NeosContext.Provider>
+                    <DragDropContextProvider backend={HTML5Backend} context={guestWindow}>
+                        <NeosContext.Provider value={{configuration, globalRegistry, routes}}>
+                            <InlineEditorEnvelope
+                                globalRegistry={globalRegistry}
+                                routes={routes}
+                                configuration={configuration}
+                                store={store}
+                                fusionPath={fusionPath}
+                                nodeTypesRegistry={nodeTypesRegistry}
+                                {...config}
+                            />
+                        </NeosContext.Provider>
+                    </DragDropContextProvider>
                 ), domNode);
         },
         ToolbarComponent: () => null

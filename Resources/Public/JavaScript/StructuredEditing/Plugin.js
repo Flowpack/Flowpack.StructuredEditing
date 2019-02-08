@@ -441,15 +441,21 @@ var _neosUiReduxStore = __webpack_require__(15);
 
 var _reactUiComponents = __webpack_require__(16);
 
-var _neosUiDecorators = __webpack_require__(17);
+var _reactRedux = __webpack_require__(17);
 
-var _reactRedux = __webpack_require__(18);
+var _plowJs = __webpack_require__(18);
 
-var _plowJs = __webpack_require__(19);
-
-var _neosUiEditors = __webpack_require__(20);
+var _neosUiEditors = __webpack_require__(19);
 
 var _neosUiEditors2 = _interopRequireDefault(_neosUiEditors);
+
+var _neosUiDecorators = __webpack_require__(20);
+
+var _reactDnd = __webpack_require__(21);
+
+var _reactDndHtml5Backend = __webpack_require__(22);
+
+var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -463,7 +469,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
     currentlyEditedPropertyName: _neosUiReduxStore.selectors.UI.ContentCanvas.currentlyEditedPropertyName,
     getNodeByContextPath: _neosUiReduxStore.selectors.CR.Nodes.nodeByContextPath,
     focusedNodePath: _neosUiReduxStore.selectors.CR.Nodes.focusedNodePathSelector
-})), (0, _neosUiDecorators.withDragDropContext)(_class = _dec(_class = (_temp2 = _class2 = function (_PureComponent) {
+})), _dec(_class = (_temp2 = _class2 = function (_PureComponent) {
     _inherits(InlineEditorEnvelope, _PureComponent);
 
     function InlineEditorEnvelope() {
@@ -592,7 +598,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
     globalRegistry: _propTypes2.default.object.isRequired,
     configuration: _propTypes2.default.object.isRequired,
     routes: _propTypes2.default.object.isRequired
-}, _temp2)) || _class) || _class);
+}, _temp2)) || _class);
 
 
 var findParentFusionPath = function findParentFusionPath(node, contextPath) {
@@ -619,18 +625,23 @@ var findParentFusionPath = function findParentFusionPath(node, contextPath) {
         },
         createInlineEditor: function createInlineEditor(config) {
             var domNode = config.propertyDomNode;
+            var guestWindow = domNode.ownerDocument.defaultView;
             var fusionPath = findParentFusionPath(domNode, config.contextPath);
             _reactDom2.default.render(_react2.default.createElement(
-                _neosUiDecorators.NeosContext.Provider,
-                { value: { configuration: configuration, globalRegistry: globalRegistry, routes: routes } },
-                _react2.default.createElement(InlineEditorEnvelope, _extends({
-                    globalRegistry: globalRegistry,
-                    routes: routes,
-                    configuration: configuration,
-                    store: store,
-                    fusionPath: fusionPath,
-                    nodeTypesRegistry: nodeTypesRegistry
-                }, config))
+                _reactDnd.DragDropContextProvider,
+                { backend: _reactDndHtml5Backend2.default, context: guestWindow },
+                _react2.default.createElement(
+                    _neosUiDecorators.NeosContext.Provider,
+                    { value: { configuration: configuration, globalRegistry: globalRegistry, routes: routes } },
+                    _react2.default.createElement(InlineEditorEnvelope, _extends({
+                        globalRegistry: globalRegistry,
+                        routes: routes,
+                        configuration: configuration,
+                        store: store,
+                        fusionPath: fusionPath,
+                        nodeTypesRegistry: nodeTypesRegistry
+                    }, config))
+                )
             ), domNode);
         },
         ToolbarComponent: function ToolbarComponent() {
@@ -1006,7 +1017,7 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiDecorators;
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
 
 /***/ }),
 /* 18 */
@@ -1021,7 +1032,7 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
 
 /***/ }),
 /* 19 */
@@ -1036,7 +1047,7 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiEditors;
 
 /***/ }),
 /* 20 */
@@ -1051,7 +1062,37 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiEditors;
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiDecorators;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(0);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().ReactDND;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(0);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().HTML5Backend;
 
 /***/ })
 /******/ ]);
