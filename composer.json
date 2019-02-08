@@ -5,6 +5,9 @@
     "require": {
         "neos/neos": "*"
     },
+    "conflict": {
+        "neos/neos-ui": "<2.0.0"
+    },
     "autoload": {
         "psr-4": {
             "Flowpack\\StructuredEditing\\": "Classes/"
