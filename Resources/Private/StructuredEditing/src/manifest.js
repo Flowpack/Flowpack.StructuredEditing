@@ -6,10 +6,9 @@ import {selectors} from '@neos-project/neos-ui-redux-store';
 import {DropDown, Icon} from '@neos-project/react-ui-components';
 import {connect} from 'react-redux';
 import {$transform, $get} from 'plow-js';
-import EditorEnvelope from '@neos-project/neos-ui-editors';
+import {EditorEnvelope} from '@neos-project/neos-ui-editors';
 import {NeosContext} from '@neos-project/neos-ui-decorators';
-import {DragDropContextProvider} from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import withDragDropContextGuest from './context';
 
 @connect($transform({
     currentlyEditedPropertyName: selectors.UI.ContentCanvas.currentlyEditedPropertyName,
@@ -119,21 +118,20 @@ manifest('Flowpack.StructuredEditing:EditorEnvelope', {}, (globalRegistry, {rout
             const domNode = config.propertyDomNode;
             const guestWindow = domNode.ownerDocument.defaultView;
             const fusionPath = findParentFusionPath(domNode, config.contextPath);
+            const InlineEditorEnvelopeWithDnd = withDragDropContextGuest(guestWindow)(InlineEditorEnvelope);
             ReactDOM.render(
                 (
-                    <DragDropContextProvider backend={HTML5Backend} context={guestWindow}>
-                        <NeosContext.Provider value={{configuration, globalRegistry, routes}}>
-                            <InlineEditorEnvelope
-                                globalRegistry={globalRegistry}
-                                routes={routes}
-                                configuration={configuration}
-                                store={store}
-                                fusionPath={fusionPath}
-                                nodeTypesRegistry={nodeTypesRegistry}
-                                {...config}
-                            />
-                        </NeosContext.Provider>
-                    </DragDropContextProvider>
+                    <NeosContext.Provider value={{configuration, globalRegistry, routes}}>
+                        <InlineEditorEnvelopeWithDnd
+                            globalRegistry={globalRegistry}
+                            routes={routes}
+                            configuration={configuration}
+                            store={store}
+                            fusionPath={fusionPath}
+                            nodeTypesRegistry={nodeTypesRegistry}
+                            {...config}
+                        />
+                    </NeosContext.Provider>
                 ), domNode);
         },
         ToolbarComponent: () => null

@@ -447,15 +447,11 @@ var _plowJs = __webpack_require__(18);
 
 var _neosUiEditors = __webpack_require__(19);
 
-var _neosUiEditors2 = _interopRequireDefault(_neosUiEditors);
-
 var _neosUiDecorators = __webpack_require__(20);
 
-var _reactDnd = __webpack_require__(21);
+var _context = __webpack_require__(23);
 
-var _reactDndHtml5Backend = __webpack_require__(22);
-
-var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
+var _context2 = _interopRequireDefault(_context);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -560,7 +556,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
                         _react2.default.createElement(
                             'div',
                             null,
-                            _react2.default.createElement(_neosUiEditors2.default, {
+                            _react2.default.createElement(_neosUiEditors.EditorEnvelope, {
                                 identifier: propertyName,
                                 label: (0, _plowJs.$get)('label', editorOptions) || (0, _plowJs.$get)(['properties', propertyName, 'ui', 'label'], nodeType) || '',
                                 editor: (0, _plowJs.$get)('editor', editorOptions),
@@ -627,21 +623,18 @@ var findParentFusionPath = function findParentFusionPath(node, contextPath) {
             var domNode = config.propertyDomNode;
             var guestWindow = domNode.ownerDocument.defaultView;
             var fusionPath = findParentFusionPath(domNode, config.contextPath);
+            var InlineEditorEnvelopeWithDnd = (0, _context2.default)(guestWindow)(InlineEditorEnvelope);
             _reactDom2.default.render(_react2.default.createElement(
-                _reactDnd.DragDropContextProvider,
-                { backend: _reactDndHtml5Backend2.default, context: guestWindow },
-                _react2.default.createElement(
-                    _neosUiDecorators.NeosContext.Provider,
-                    { value: { configuration: configuration, globalRegistry: globalRegistry, routes: routes } },
-                    _react2.default.createElement(InlineEditorEnvelope, _extends({
-                        globalRegistry: globalRegistry,
-                        routes: routes,
-                        configuration: configuration,
-                        store: store,
-                        fusionPath: fusionPath,
-                        nodeTypesRegistry: nodeTypesRegistry
-                    }, config))
-                )
+                _neosUiDecorators.NeosContext.Provider,
+                { value: { configuration: configuration, globalRegistry: globalRegistry, routes: routes } },
+                _react2.default.createElement(InlineEditorEnvelopeWithDnd, _extends({
+                    globalRegistry: globalRegistry,
+                    routes: routes,
+                    configuration: configuration,
+                    store: store,
+                    fusionPath: fusionPath,
+                    nodeTypesRegistry: nodeTypesRegistry
+                }, config))
             ), domNode);
         },
         ToolbarComponent: function ToolbarComponent() {
@@ -1077,7 +1070,7 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().ReactDND;
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().HTML5Backend;
 
 /***/ }),
 /* 22 */
@@ -1092,7 +1085,37 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().HTML5Backend;
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().ReactDND;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _reactDndHtml5Backend = __webpack_require__(21);
+
+var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
+
+var _reactDnd = __webpack_require__(22);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// This must be a singleton, in order to not run into "Cannot have two HTML5 backends" error
+var withDragDropContextGuest = null;
+
+var makeWithDragDropContextGuest = function makeWithDragDropContextGuest(guestWindow) {
+    if (!withDragDropContextGuest) {
+        withDragDropContextGuest = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default, guestWindow);
+    }
+    return withDragDropContextGuest;
+};
+exports.default = makeWithDragDropContextGuest;
 
 /***/ })
 /******/ ]);
