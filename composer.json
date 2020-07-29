@@ -6,7 +6,7 @@
         "neos/neos": "*"
     },
     "conflict": {
-        "neos/neos-ui": "<2.0.0"
+        "neos/neos-ui": "<4.0.0"
     },
     "autoload": {
         "psr-4": {

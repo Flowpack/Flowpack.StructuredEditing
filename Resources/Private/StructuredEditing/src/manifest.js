@@ -1,49 +1,58 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import manifest from '@neos-project/neos-ui-extensibility';
-import {selectors} from '@neos-project/neos-ui-redux-store';
-import {DropDown, Icon} from '@neos-project/react-ui-components';
-import {connect} from 'react-redux';
-import {$transform, $get} from 'plow-js';
-import {EditorEnvelope} from '@neos-project/neos-ui-editors';
-import {NeosContext} from '@neos-project/neos-ui-decorators';
-import withDragDropContextGuest from './context';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+import manifest from "@neos-project/neos-ui-extensibility";
+import { selectors } from "@neos-project/neos-ui-redux-store";
+import { DropDown, Icon } from "@neos-project/react-ui-components";
+import { connect } from "react-redux";
+import { $transform, $get } from "plow-js";
+import { Provider } from "react-redux";
+import { DndProvider } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
+import { EditorEnvelope } from "@neos-project/neos-ui-editors";
+import { NeosContext } from "@neos-project/neos-ui-decorators";
 
-@connect($transform({
-    currentlyEditedPropertyName: selectors.UI.ContentCanvas.currentlyEditedPropertyName,
+@connect(
+  $transform({
+    currentlyEditedPropertyName:
+      selectors.UI.ContentCanvas.currentlyEditedPropertyName,
     getNodeByContextPath: selectors.CR.Nodes.nodeByContextPath,
-    focusedNodePath: selectors.CR.Nodes.focusedNodePathSelector
-}))
+    focusedNodePath: selectors.CR.Nodes.focusedNodePathSelector,
+  })
+)
 class InlineEditorEnvelope extends PureComponent {
-    state = {
-        isOpen: false
-    }
-    static childContextTypes = {
-        store: PropTypes.object.isRequired,
-        globalRegistry: PropTypes.object.isRequired,
-        configuration: PropTypes.object.isRequired,
-        routes: PropTypes.object.isRequired
-    };
-    getChildContext() {
-        const {configuration, globalRegistry, routes, store} = this.props;
-        return {configuration, globalRegistry, routes, store};
-    }
-    handleToggle = () => {
-        this.setState({isOpen: !this.state.isOpen});
-    }
-    render() {
-        const {contextPath, fusionPath, propertyName, persistChange, editorOptions, getNodeByContextPath} = this.props;
-        const node = getNodeByContextPath(contextPath);
-        const nodeTypeName = $get('nodeType', node);
-        const nodeType = this.props.nodeTypesRegistry.getNodeType(nodeTypeName);
-        const icon = $get('icon', editorOptions) || 'pencil';
-        const value = $get(['properties', propertyName], node);
-        return (
-            <div style={{display: 'inline-block'}}>
-                <DropDown.Stateless isOpen={this.state.isOpen} padded={true} onToggle={this.handleToggle} onClose={() => null}>
-                    <DropDown.Header className="enveloper_dropdown_header">
-                        <style>{'\
+  state = {
+    isOpen: false,
+  };
+  handleToggle = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
+  render() {
+    const {
+      contextPath,
+      fusionPath,
+      propertyName,
+      persistChange,
+      editorOptions,
+      getNodeByContextPath,
+    } = this.props;
+    const node = getNodeByContextPath(contextPath);
+    const nodeTypeName = $get("nodeType", node);
+    const nodeType = this.props.nodeTypesRegistry.getNodeType(nodeTypeName);
+    const icon = $get("icon", editorOptions) || "pencil";
+    const value = $get(["properties", propertyName], node);
+    return (
+      <div style={{ display: "inline-block" }}>
+        <DropDown.Stateless
+          isOpen={this.state.isOpen}
+          padded={true}
+          onToggle={this.handleToggle}
+          onClose={() => null}
+        >
+          <DropDown.Header className="enveloper_dropdown_header">
+            <style>
+              {
+                "\
                         .enveloper_dropdown_header{\
                             position: relative;\
                             width: 30px;\
@@ -62,78 +71,101 @@ class InlineEditorEnvelope extends PureComponent {
                         .enveloper_dropdown_header svg:nth-child(3) {\
                             display: none;\
                         }\
-                        '}</style>
-                        <Icon className="enveloper_dropdown_icon" icon={icon} />
-                    </DropDown.Header>
-                    <DropDown.Contents className="enveloper_dropdown_contents" scrollable={false}>
-                        <div>
-                            <EditorEnvelope
-                                identifier={propertyName}
-                                label={$get('label', editorOptions) || $get(['properties', propertyName, 'ui', 'label'], nodeType) || ''}
-                                editor={$get('editor', editorOptions)}
-                                value={value && value.toJS ? value.toJS() : value}
-                                hooks={null}
-                                options={editorOptions}
-                                commit={value => {
-                                    persistChange({
-                                        type: 'Neos.Neos.Ui:Property',
-                                        subject: contextPath,
-                                        payload: {
-                                            propertyName,
-                                            value,
-                                            nodeDomAddress: {
-                                                contextPath,
-                                                fusionPath
-                                            }
-                                        }
-                                    });
-                                }}
-                                renderSecondaryInspector={() => null}
-                            />
-                        </div>
-                    </DropDown.Contents>
-                </DropDown.Stateless>
+                        "
+              }
+            </style>
+            <Icon className="enveloper_dropdown_icon" icon={icon} />
+          </DropDown.Header>
+          <DropDown.Contents
+            className="enveloper_dropdown_contents"
+            scrollable={false}
+          >
+            <div>
+              <EditorEnvelope
+                identifier={propertyName}
+                label={
+                  $get("label", editorOptions) ||
+                  $get(["properties", propertyName, "ui", "label"], nodeType) ||
+                  ""
+                }
+                editor={$get("editor", editorOptions)}
+                value={value && value.toJS ? value.toJS() : value}
+                hooks={null}
+                options={editorOptions}
+                commit={(value) => {
+                  persistChange({
+                    type: "Neos.Neos.Ui:Property",
+                    subject: contextPath,
+                    payload: {
+                      propertyName,
+                      value,
+                      nodeDomAddress: {
+                        contextPath,
+                        fusionPath,
+                      },
+                    },
+                  });
+                }}
+                renderSecondaryInspector={() => null}
+              />
             </div>
-        );
-    }
+          </DropDown.Contents>
+        </DropDown.Stateless>
+      </div>
+    );
+  }
 }
 
 const findParentFusionPath = (node, contextPath) => {
-    if (node) {
-        const fusionPath = node.getAttribute('data-__neos-fusion-path');
-        if (fusionPath && node.getAttribute('data-__neos-node-contextpath') === contextPath) {
-            return fusionPath;
-        }
-        return findParentFusionPath(node.parentNode, contextPath);
+  if (node) {
+    const fusionPath = node.getAttribute("data-__neos-fusion-path");
+    if (
+      fusionPath &&
+      node.getAttribute("data-__neos-node-contextpath") === contextPath
+    ) {
+      return fusionPath;
     }
-    return null;
+    return findParentFusionPath(node.parentNode, contextPath);
+  }
+  return null;
 };
 
-manifest('Flowpack.StructuredEditing:EditorEnvelope', {}, (globalRegistry, {routes, configuration, store}) => {
-    const inlineEditorRegistry = globalRegistry.get('inlineEditors');
-    const nodeTypesRegistry = globalRegistry.get('@neos-project/neos-ui-contentrepository');
-    inlineEditorRegistry.set('Flowpack.StructuredEditing/EditorEnvelope', {
-        bootstrap: () => null,
-        createInlineEditor: config => {
-            const domNode = config.propertyDomNode;
-            const guestWindow = domNode.ownerDocument.defaultView;
-            const fusionPath = findParentFusionPath(domNode, config.contextPath);
-            const InlineEditorEnvelopeWithDnd = withDragDropContextGuest(guestWindow)(InlineEditorEnvelope);
-            ReactDOM.render(
-                (
-                    <NeosContext.Provider value={{configuration, globalRegistry, routes}}>
-                        <InlineEditorEnvelopeWithDnd
-                            globalRegistry={globalRegistry}
-                            routes={routes}
-                            configuration={configuration}
-                            store={store}
-                            fusionPath={fusionPath}
-                            nodeTypesRegistry={nodeTypesRegistry}
-                            {...config}
-                        />
-                    </NeosContext.Provider>
-                ), domNode);
-        },
-        ToolbarComponent: () => null
+manifest(
+  "Flowpack.StructuredEditing:EditorEnvelope",
+  {},
+  (globalRegistry, { routes, configuration, store }) => {
+    const inlineEditorRegistry = globalRegistry.get("inlineEditors");
+    const nodeTypesRegistry = globalRegistry.get(
+      "@neos-project/neos-ui-contentrepository"
+    );
+    inlineEditorRegistry.set("Flowpack.StructuredEditing/EditorEnvelope", {
+      bootstrap: () => null,
+      createInlineEditor: (config) => {
+        const domNode = config.propertyDomNode;
+        const guestWindow = domNode.ownerDocument.defaultView;
+        const fusionPath = findParentFusionPath(domNode, config.contextPath);
+        ReactDOM.render(
+          <Provider store={store}>
+            <NeosContext.Provider
+              value={{ configuration, globalRegistry, routes }}
+            >
+              <DndProvider backend={HTML5Backend} context={guestWindow}>
+                <InlineEditorEnvelope
+                  globalRegistry={globalRegistry}
+                  routes={routes}
+                  configuration={configuration}
+                  store={store}
+                  fusionPath={fusionPath}
+                  nodeTypesRegistry={nodeTypesRegistry}
+                  {...config}
+                />
+              </DndProvider>
+            </NeosContext.Provider>
+          </Provider>,
+          domNode
+        );
+      },
+      ToolbarComponent: () => null,
     });
-});
+  }
+);
