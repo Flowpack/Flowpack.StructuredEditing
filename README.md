@@ -6,10 +6,10 @@ Allows to reuse inspector editors inline. Hint: put all content-related properti
 
 Getting started:
 
-1. `composer require 'flowpack/structuredediting:@dev'`
+1. `composer require flowpack/structuredediting`
 2. Configure your nodetype properties to be inline editable like this:
 
-```
+```yaml
 'Some.Node:Type'
   properties:
     date:
@@ -28,12 +28,16 @@ Getting started:
 3. Render an editable annotation for this field, using usual `ContentElementEditable` annotation, which will be turned into the pencil edit icon:
 
 ```
-prototype(Some.Node:Type) < prototype(Neos.Fusion:Array) {
- dateEditable = ContentElementEditable {
-	 property = 'date'
- }
- date = ${Date.format(node.properties.date, 'd-m-Y')}
- @process.contentElementWrapping = ContentElementWrapping
+prototype(Some.Node:Type) < prototype(Neos.Neos:ContentComponent) {
+  dateEditable = Neos.Neos:ContentElementEditable {
+    property = 'date'
+  }
+  date = ${q(node).property('date')}
+
+  renderer = afx`
+    {props.dateEditable}
+    {Date.format(props.date, 'd-m-Y')}
+  `
 }
 ```
 
