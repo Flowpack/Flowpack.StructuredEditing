@@ -1019,6 +1019,137 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 
 /***/ }),
 
+/***/ "./src/SecondaryInspector/index.js":
+/*!*****************************************!*\
+  !*** ./src/SecondaryInspector/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class, _class2, _temp;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-redux/index.js");
+
+var _plowJs = __webpack_require__(/*! plow-js */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/plow-js/index.js");
+
+var _neosUiReduxStore = __webpack_require__(/*! @neos-project/neos-ui-redux-store */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-redux-store/index.js");
+
+var _reactUiComponents = __webpack_require__(/*! @neos-project/react-ui-components */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/react-ui-components/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SecondaryInspector = (_dec = (0, _reactRedux.connect)(function (state) {
+  var isDirty = _neosUiReduxStore.selectors.UI.Inspector.isDirty(state);
+  var shouldPromptToHandleUnappliedChanges = _neosUiReduxStore.selectors.UI.Inspector.shouldPromptToHandleUnappliedChanges(state);
+  var unappliedChangesOverlayIsVisible = isDirty && !shouldPromptToHandleUnappliedChanges;
+
+  return {
+    isFringeLeft: (0, _plowJs.$get)("ui.leftSideBar.isHidden", state),
+    isFringeRight: (0, _plowJs.$get)("ui.rightSideBar.isHidden", state),
+    isFullScreen: (0, _plowJs.$get)("ui.fullScreen.isFullScreen", state),
+    unappliedChangesOverlayIsVisible: unappliedChangesOverlayIsVisible
+  };
+}), _dec(_class = (_temp = _class2 = function (_PureComponent) {
+  _inherits(SecondaryInspector, _PureComponent);
+
+  function SecondaryInspector() {
+    _classCallCheck(this, SecondaryInspector);
+
+    return _possibleConstructorReturn(this, (SecondaryInspector.__proto__ || Object.getPrototypeOf(SecondaryInspector)).apply(this, arguments));
+  }
+
+  _createClass(SecondaryInspector, [{
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          onClose = _props.onClose,
+          children = _props.children,
+          isFringeLeft = _props.isFringeLeft,
+          isFringeRight = _props.isFringeRight,
+          unappliedChangesOverlayIsVisible = _props.unappliedChangesOverlayIsVisible;
+
+      var style = {
+        position: "absolute",
+        top: 82,
+        right: isFringeRight ? 0 : 320,
+        left: isFringeLeft ? 0 : 320,
+        bottom: 0,
+        background: "#222",
+        height: "calc(100% - 82px)",
+        border: "1px solid #222",
+        transition: ".25s ease left, .25s ease right",
+        willChange: "left, right",
+        zIndex: unappliedChangesOverlayIsVisible ? 2 : 1
+      };
+
+      return _react2.default.createElement(
+        "div",
+        { style: style },
+        _react2.default.createElement(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              top: 0,
+              right: 0,
+              width: 40,
+              height: 40,
+              padding: 0,
+              fontSize: 18,
+              borderRightWidth: 0,
+              borderTopWidth: 0,
+              zIndex: 2
+            }
+          },
+          _react2.default.createElement(
+            _reactUiComponents.Button,
+            { style: "clean", onClick: onClose },
+            _react2.default.createElement(_reactUiComponents.Icon, { icon: "times" })
+          )
+        ),
+        children
+      );
+    }
+  }]);
+
+  return SecondaryInspector;
+}(_react.PureComponent), _class2.propTypes = {
+  isFringeLeft: _propTypes2.default.bool.isRequired,
+  isFringeRight: _propTypes2.default.bool.isRequired,
+  unappliedChangesOverlayIsVisible: _propTypes2.default.bool.isRequired,
+
+  // Interaction related propTypes.
+  onClose: _propTypes2.default.func.isRequired,
+  children: _propTypes2.default.element.isRequired
+}, _temp)) || _class);
+exports.default = SecondaryInspector;
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -1049,13 +1180,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _class;
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _react = __webpack_require__(/*! react */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-dom/index.js");
 
@@ -1083,6 +1212,10 @@ var _neosUiEditors = __webpack_require__(/*! @neos-project/neos-ui-editors */ ".
 
 var _neosUiDecorators = __webpack_require__(/*! @neos-project/neos-ui-decorators */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/neos-ui-decorators/index.js");
 
+var _index = __webpack_require__(/*! ./SecondaryInspector/index */ "./src/SecondaryInspector/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1090,6 +1223,46 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var renderSecondaryInspector = function renderSecondaryInspector() {};
+
+var InlineSecondaryInspector = function InlineSecondaryInspector() {
+  var _useState = (0, _react.useState)({
+    secondaryInspectorName: undefined,
+    secondaryInspectorComponent: undefined
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      state = _useState2[0],
+      setState = _useState2[1];
+
+  var closeSecondaryInspector = function closeSecondaryInspector() {
+    setState({
+      secondaryInspectorName: undefined,
+      secondaryInspectorComponent: undefined
+    });
+  };
+  renderSecondaryInspector = function renderSecondaryInspector(secondaryInspectorName, secondaryInspectorComponentFactory) {
+    if (state.secondaryInspectorName === secondaryInspectorName) {
+      // We toggle the secondary inspector if it is rendered a second time; so that's why we hide it here.
+      closeSecondaryInspector();
+    } else {
+      var secondaryInspectorComponent = null;
+      if (secondaryInspectorComponentFactory) {
+        // Hint: we directly resolve the factory function here, to ensure the object is not re-created on every render but stays the same for its whole lifetime.
+        secondaryInspectorComponent = secondaryInspectorComponentFactory();
+      }
+      setState({
+        secondaryInspectorName: secondaryInspectorName,
+        secondaryInspectorComponent: secondaryInspectorComponent
+      });
+    }
+  };
+  return state.secondaryInspectorComponent ? _react2.default.createElement(
+    _index2.default,
+    { onClose: closeSecondaryInspector },
+    state.secondaryInspectorComponent
+  ) : null;
+};
 
 var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
   currentlyEditedPropertyName: _neosUiReduxStore.selectors.UI.ContentCanvas.currentlyEditedPropertyName,
@@ -1204,9 +1377,7 @@ var InlineEditorEnvelope = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transfo
                     }
                   });
                 },
-                renderSecondaryInspector: function renderSecondaryInspector() {
-                  return null;
-                }
+                renderSecondaryInspector: renderSecondaryInspector
               })
             )
           )
@@ -1235,6 +1406,8 @@ var findParentFusionPath = function findParentFusionPath(node, contextPath) {
       configuration = _ref2.configuration,
       store = _ref2.store;
 
+  var containerRegistry = globalRegistry.get("containers");
+  containerRegistry.set("Modals/InlineSecondaryInspector", InlineSecondaryInspector);
   var inlineEditorRegistry = globalRegistry.get("inlineEditors");
   var nodeTypesRegistry = globalRegistry.get("@neos-project/neos-ui-contentrepository");
   inlineEditorRegistry.set("Flowpack.StructuredEditing/EditorEnvelope", {

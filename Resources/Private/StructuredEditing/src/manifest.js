@@ -1,5 +1,4 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
+import React, { PureComponent, useState } from "react";
 import ReactDOM from "react-dom";
 import manifest from "@neos-project/neos-ui-extensibility";
 import { selectors } from "@neos-project/neos-ui-redux-store";
@@ -11,6 +10,46 @@ import { DndProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import { EditorEnvelope } from "@neos-project/neos-ui-editors";
 import { NeosContext } from "@neos-project/neos-ui-decorators";
+import SecondaryInspector from "./SecondaryInspector/index";
+
+let renderSecondaryInspector = () => {};
+
+const InlineSecondaryInspector = () => {
+  const [state, setState] = useState({
+    secondaryInspectorName: undefined,
+    secondaryInspectorComponent: undefined,
+  });
+  const closeSecondaryInspector = () => {
+    setState({
+      secondaryInspectorName: undefined,
+      secondaryInspectorComponent: undefined,
+    });
+  };
+  renderSecondaryInspector = (
+    secondaryInspectorName,
+    secondaryInspectorComponentFactory
+  ) => {
+    if (state.secondaryInspectorName === secondaryInspectorName) {
+      // We toggle the secondary inspector if it is rendered a second time; so that's why we hide it here.
+      closeSecondaryInspector();
+    } else {
+      let secondaryInspectorComponent = null;
+      if (secondaryInspectorComponentFactory) {
+        // Hint: we directly resolve the factory function here, to ensure the object is not re-created on every render but stays the same for its whole lifetime.
+        secondaryInspectorComponent = secondaryInspectorComponentFactory();
+      }
+      setState({
+        secondaryInspectorName,
+        secondaryInspectorComponent,
+      });
+    }
+  };
+  return state.secondaryInspectorComponent ? (
+    <SecondaryInspector onClose={closeSecondaryInspector}>
+      {state.secondaryInspectorComponent}
+    </SecondaryInspector>
+  ) : null;
+};
 
 @connect(
   $transform({
@@ -106,7 +145,7 @@ class InlineEditorEnvelope extends PureComponent {
                     },
                   });
                 }}
-                renderSecondaryInspector={() => null}
+                renderSecondaryInspector={renderSecondaryInspector}
               />
             </div>
           </DropDown.Contents>
@@ -134,6 +173,11 @@ manifest(
   "Flowpack.StructuredEditing:EditorEnvelope",
   {},
   (globalRegistry, { routes, configuration, store }) => {
+    const containerRegistry = globalRegistry.get("containers");
+    containerRegistry.set(
+      "Modals/InlineSecondaryInspector",
+      InlineSecondaryInspector
+    );
     const inlineEditorRegistry = globalRegistry.get("inlineEditors");
     const nodeTypesRegistry = globalRegistry.get(
       "@neos-project/neos-ui-contentrepository"
